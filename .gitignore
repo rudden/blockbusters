@@ -16,4 +16,5 @@
 *.ilk
 *.log
 obj/
+bin/
 .vs/
