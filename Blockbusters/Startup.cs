@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Blockbusters.Entities;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -8,13 +9,10 @@ namespace Blockbusters
 {
 	public class Startup
 	{
-		private readonly IHostingEnvironment _env;
 		private readonly IConfigurationRoot _config;
 
 		public Startup(IHostingEnvironment env)
 		{
-			_env = env;
-
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(env.ContentRootPath)
 				.AddJsonFile("config.json")
@@ -28,6 +26,8 @@ namespace Blockbusters
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSingleton(_config);
+
+			services.AddDbContext<BlockbustersContext>();
 
 			services.AddMvc();
 		}
