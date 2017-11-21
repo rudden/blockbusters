@@ -1,0 +1,5 @@
+﻿{
+	"ConnectionStrings": {
+		"ForumContextConnection": "Server=(localdb)\\MSSQLLocalDB;Database=Blockbusters;Trusted_Connection=true;MultipleActiveResultSets=true;"
+	}
+}
