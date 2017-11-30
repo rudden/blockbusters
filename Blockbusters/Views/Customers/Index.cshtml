@@ -1,0 +1,23 @@
+﻿@model Blockbusters.ViewModels.CustomersViewModel
+
+<p class="title is-1 is-spaced">@Model.Header</p>
+
+<table class="table is-fullwidth">
+	<thead>
+	<tr>
+		<th>Firstname</th>
+		<th>Lastname</th>
+		<th>Email</th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var customer in Model.Paging.Data)
+	{
+		<tr>
+			<td>@customer.FirstName</td>
+			<td>@customer.LastName</td>
+			<td>@customer.Email</td>
+		</tr>
+	}
+	</tbody>
+</table>

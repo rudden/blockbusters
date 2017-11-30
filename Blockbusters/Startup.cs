@@ -1,7 +1,10 @@
 ﻿using Blockbusters.Entities;
+using Blockbusters.Models;
+using Blockbusters.Models.Helpers;
+using Blockbusters.Services;
+using Blockbusters.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,11 +32,18 @@ namespace Blockbusters
 
 			services.AddDbContext<BlockbustersContext>();
 
+			services.AddTransient<Seeder>();
+
+			services.AddTransient<Mapper>();
+
 			services.AddMvc();
+
+			services.AddScoped<IVideoRepository, VideoRepository>();
+			services.AddScoped<ICustomerRepository, CustomerRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seeder seeder, Mapper mapper)
 		{
 			if (env.IsDevelopment())
 			{
@@ -41,6 +51,13 @@ namespace Blockbusters
 			}
 
 			app.UseStaticFiles();
+
+			AutoMapper.Mapper.Initialize(configure =>
+			{
+				configure.CreateMap<Entities.Video, Models.Video>()
+					.ForMember(dest => dest.Genres, opt => opt.MapFrom(src => mapper.MapGenres(src.Genre)))
+					.ForMember(dest => dest.VideoType, opt => opt.MapFrom(src => EnumHelper.FromString<VideoType>(src.VideoType)));
+			});
 
 			app.UseMvc(c =>
 			{
@@ -51,6 +68,8 @@ namespace Blockbusters
 					defaults: new { controller = "home", action = "index" }
 				);
 			});
+
+			seeder.Seed().Wait();
 		}
 	}
 }

@@ -1,10 +1,21 @@
 ﻿<html>
 <head>
 	<title>Blockbusters</title>
+	<link rel="stylesheet" href="~/css/site.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-	@RenderBody()
+	<div class="columns">
+		@Html.Partial("_Navbar")
+		<div class="column is-10 hero is-fullheight main">
+			<div class="items">
+				@RenderBody()
+			</div>
+		</div>
+	</div>
 
-@RenderSection("scripts", required: false)
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="~/js/navbar.js"></script>
 </body>
 </html>

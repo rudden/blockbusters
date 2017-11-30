@@ -1,5 +1,4 @@
-﻿using Blockbusters.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Blockbusters.Entities

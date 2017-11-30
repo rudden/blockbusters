@@ -1,0 +1,22 @@
+﻿@model Blockbusters.ViewModels.VideoViewModel
+
+<p class="title is-1 is-spaced">@Model.Header</p>
+
+<div class="card">
+	<div class="card-icon">
+		<i class="fa fa-video-camera"></i>
+	</div>
+	<div class="card-content">
+		<div class="media-content">
+			<div class="media-left">
+				<p class="title is-4">@Model.Video.Title</p>
+				<p class="subtitle is-6"><small>@Model.Video.Subtitle</small></p>
+			</div>
+		</div>
+		<div class="content" style="margin-top: 15px">@Model.Video.Storyline</div>
+	</div>
+	<footer class="card-footer">
+		<a href="#" class="card-footer-item">Rent Movie <i class="fa fa-credit-card" style="margin-left: 7px"></i></a>
+		<a href="/videos" class="card-footer-item">Back To List <i class="fa fa-arrow-left" style="margin-left: 7px"></i></a>
+	</footer>
+</div>
