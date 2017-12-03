@@ -16,7 +16,7 @@
 	<tbody>
 	@foreach (var customer in Model.Paging.Data)
 	{
-		<tr data-href="/customers/@customer.Id">
+		<tr data-href="/customers/details/@customer.Id">
 			<td>@customer.FirstName</td>
 			<td>@customer.LastName</td>
 			<td>@customer.Email</td>

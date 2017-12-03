@@ -26,7 +26,6 @@ namespace Blockbusters.Controllers
 			_repository = repository;
 		}
 
-		// GET: /<controller>/
 		public async Task<IActionResult> Index()
 		{
 			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
@@ -42,9 +41,7 @@ namespace Blockbusters.Controllers
 			});
 		}
 
-		// GET: /<controller>/{id}
-		[Route("[controller]/{id}")]
-		public async Task<IActionResult> Customer(int id)
+		public async Task<IActionResult> Details(int id)
 		{
 			var customer = Mapper.Map<Customer>(await _repository.GetCustomerAsync(id));
 			return View(new CustomerViewModel
@@ -53,7 +50,6 @@ namespace Blockbusters.Controllers
 			});
 		}
 
-		[Route("[controller]/add")]
 		public IActionResult Add()
 		{
 			return View();
@@ -61,7 +57,6 @@ namespace Blockbusters.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Route("[controller]/add")]
 		public async Task<IActionResult> Add(NewCustomerViewModel model)
 		{
 			if (ModelState.IsValid)

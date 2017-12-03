@@ -56,9 +56,8 @@ namespace Blockbusters.Controllers
 				}
 			});
 		}
-
-		[Route("[controller]/{id}")]
-		public async Task<IActionResult> Video(int id)
+		
+		public async Task<IActionResult> Details(int id)
 		{
 			var video = Mapper.Map<Video>(await _repository.GetVideoAsync(id));
 			return View(new VideoViewModel
@@ -68,7 +67,6 @@ namespace Blockbusters.Controllers
 			});
 		}
 
-		[Route("[controller]/add")]
 		public async Task<IActionResult> Add()
 		{
 			return View(new NewVideoViewModel
@@ -80,7 +78,6 @@ namespace Blockbusters.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Route("[controller]/add")]
 		public async Task<IActionResult> Add(NewVideoViewModel model)
 		{
 			var selectedGenres = model.Genres.Where(x => x.IsChecked).Select(g => g.Id).ToList();

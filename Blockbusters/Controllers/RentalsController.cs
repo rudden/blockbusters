@@ -53,7 +53,6 @@ namespace Blockbusters.Controllers
 		//	});
 		//}
 
-		[Route("[controller]/add")]
 		public async Task<IActionResult> Add()
 		{
 			return View(new NewRentalViewModel
@@ -65,7 +64,6 @@ namespace Blockbusters.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		[Route("[controller]/add")]
 		public async Task<IActionResult> Add(NewRentalViewModel model)
 		{
 			if (ModelState.IsValid)
