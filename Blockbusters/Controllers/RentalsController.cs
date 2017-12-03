@@ -32,7 +32,7 @@ namespace Blockbusters.Controllers
 			var rentals = Mapper.Map<List<Rental>>(await _videoRepository.GetRentalsAsync());
 			return View(new RentalsViewModel
 			{
-				Header = "Rental history",
+				Header = "Rentals",
 				Paging = new Paging<Rental>
 				{
 					Data = rentals.Take(PageSize),
@@ -42,16 +42,21 @@ namespace Blockbusters.Controllers
 			});
 		}
 
-		//[Route("[controller]/{id}")]
-		//public async Task<IActionResult> Video(int id)
-		//{
-		//	var video = Mapper.Map<Video>(await _videoRepository.GetVideoAsync(id));
-		//	return View(new VideoViewModel
-		//	{
-		//		Header = video.Title,
-		//		Video = video
-		//	});
-		//}
+		public async Task<IActionResult> Page(int id)
+		{
+			var rentals = Mapper.Map<List<Rental>>(await _videoRepository.GetRentalsAsync());
+			return View("Index", new RentalsViewModel
+			{
+				Header = $"Rentals, page {id}",
+				Paging = new Paging<Rental>
+				{
+					Data = rentals.Skip(PageSize * (id - 1)).Take(PageSize),
+					CurrentPage = id,
+					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)rentals.Count / PageSize)),
+					Total = rentals.Count
+				}
+			});
+		}
 
 		public async Task<IActionResult> Add()
 		{

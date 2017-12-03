@@ -40,17 +40,16 @@ namespace Blockbusters.Controllers
 			});
 		}
 
-		[Route("[controller]/page/{pageNumber}")]
-		public async Task<IActionResult> Page(int pageNumber)
+		public async Task<IActionResult> Page(int id)
 		{
 			var videos = Mapper.Map<List<Video>>(await _repository.GetVideosAsync());
-			return View(new VideosViewModel
+			return View("Index", new VideosViewModel
 			{
-				Header = $"Videos page {pageNumber}",
+				Header = $"Videos, page {id}",
 				Paging = new Paging<Video>
 				{
-					Data = videos.Skip(PageSize * (pageNumber - 1)).Take(PageSize),
-					CurrentPage = pageNumber,
+					Data = videos.Skip(PageSize * (id - 1)).Take(PageSize),
+					CurrentPage = id,
 					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)videos.Count / PageSize)),
 					Total = videos.Count
 				}

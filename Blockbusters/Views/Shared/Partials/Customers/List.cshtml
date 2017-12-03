@@ -1,0 +1,42 @@
+﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.Customer>
+
+<table class="table is-fullwidth customers">
+	<thead>
+		<tr>
+			<th>Firstname</th>
+			<th>Lastname</th>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var customer in Model.Data)
+		{
+			<tr data-href="/customers/details/@customer.Id">
+				<td>@customer.FirstName</td>
+				<td>@customer.LastName</td>
+				<td>@customer.Email</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@if (Model.NumberOfPages > 1)
+{
+	<nav class="pagination">
+		<ul class="pagination-list">
+			@for (var i = 1; i <= Model.NumberOfPages; i++)
+			{
+				<li>
+					@if (Model.CurrentPage == 0 && i == 1 || Model.CurrentPage == i)
+					{
+						<a class="pagination-link is-current" href="/customers/page/@i">@i</a>
+					}
+					else
+					{
+						<a class="pagination-link" href="/customers/page/@i">@i</a>
+					}
+				</li>
+			}
+		</ul>
+	</nav>
+}

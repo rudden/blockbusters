@@ -41,6 +41,22 @@ namespace Blockbusters.Controllers
 			});
 		}
 
+		public async Task<IActionResult> Page(int id)
+		{
+			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
+			return View("Index", new CustomersViewModel
+			{
+				Header = $"Customers, page {id}",
+				Paging = new Paging<Customer>
+				{
+					Data = customers.Skip(PageSize * (id - 1)).Take(PageSize),
+					CurrentPage = id,
+					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)customers.Count / PageSize)),
+					Total = customers.Count
+				}
+			});
+		}
+
 		public async Task<IActionResult> Details(int id)
 		{
 			var customer = Mapper.Map<Customer>(await _repository.GetCustomerAsync(id));

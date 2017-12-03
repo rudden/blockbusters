@@ -1,0 +1,62 @@
+﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.Rental>
+
+<table class="table is-fullwidth customers">
+	<thead>
+		<tr>
+			<th>Video</th>
+			<th>Customer</th>
+			<th>Rented at</th>
+			<th>Returned at</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var rental in Model.Data)
+		{
+			<tr data-href="/rentals/@rental.Id">
+				<td>@rental.Video.Title</td>
+				<td>@rental.RentedByCustomer.FullName</td>
+				<td>@rental.RentedAt.ToString("yyyy-MM-dd")</td>
+				<td>
+					@if (rental.ReturnedAt == null)
+				{
+					if (rental.ShouldBeReturnedAt < DateTime.Now)
+					{
+						var overdueDays = (DateTime.Now - rental.ShouldBeReturnedAt).TotalDays;
+							<span class="tag is-danger">Overdue with @overdueDays days</span>
+					}
+					else
+					{
+							<span class="tag is-warning">With customer</span>
+					}
+				}
+				else
+				{
+					var returned = Convert.ToDateTime(rental.ReturnedAt);
+						<span class="tag is-success">Returned @returned.ToString("yyyy-MM-dd")</span>
+				}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@if (Model.NumberOfPages > 1)
+{
+	<nav class="pagination">
+		<ul class="pagination-list">
+			@for (var i = 1; i <= Model.NumberOfPages; i++)
+			{
+				<li>
+					@if (Model.CurrentPage == 0 && i == 1 || Model.CurrentPage == i)
+					{
+						<a class="pagination-link is-current" href="/rentals/page/@i">@i</a>
+					}
+					else
+					{
+						<a class="pagination-link" href="/rentals/page/@i">@i</a>
+					}
+				</li>
+			}
+		</ul>
+	</nav>
+}

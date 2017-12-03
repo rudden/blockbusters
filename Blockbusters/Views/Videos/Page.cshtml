@@ -1,8 +1,0 @@
-﻿@model Blockbusters.ViewModels.VideosViewModel
-
-<div class="header">
-	<p class="title is-1 is-spaced">@Model.Header</p>
-	<a href="/videos/add" class="button is-dark is-medium">New Video</a>
-</div>
-
-@Html.Partial("Partials/Videos/List", Model.Paging)

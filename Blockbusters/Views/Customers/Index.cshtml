@@ -5,26 +5,7 @@
 	<a href="/customers/add" class="button is-dark is-medium">New Customer</a>	
 </div>
 
-<table class="table is-fullwidth customers">
-	<thead>
-	<tr>
-		<th>Firstname</th>
-		<th>Lastname</th>
-		<th>Email</th>
-	</tr>
-	</thead>
-	<tbody>
-	@foreach (var customer in Model.Paging.Data)
-	{
-		<tr data-href="/customers/details/@customer.Id">
-			<td>@customer.FirstName</td>
-			<td>@customer.LastName</td>
-			<td>@customer.Email</td>
-		</tr>
-	}
-	</tbody>
-</table>
-
+@Html.Partial("Partials/Customers/List", Model.Paging)
 
 @section Scripts {
 	<script type="text/javascript">
