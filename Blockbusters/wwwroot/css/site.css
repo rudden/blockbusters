@@ -165,7 +165,7 @@ aside.aside.hero {
 	color: #5D5D5D;
 }
 
-table.customers tbody tr:hover {
+table tbody tr:hover {
 	cursor: pointer;
 	background-color: #dedede;
 }

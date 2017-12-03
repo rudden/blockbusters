@@ -5,4 +5,13 @@
 	<a href="/videos/add" class="button is-dark is-medium">New Video</a>
 </div>
 
-@Html.Partial("Partials/Videos/List", Model.Paging)
+@if (Model.Paging.Table.Data.Any())
+{
+	@Html.Partial("Partials/Videos/List", Model.Paging)
+}
+else
+{
+	<div class="notification is-danger">
+		Did not find any videos
+	</div>
+}

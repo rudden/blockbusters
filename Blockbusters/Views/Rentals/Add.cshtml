@@ -28,10 +28,10 @@
 			<!-- store in model after posts -->
 			@for (var i = 0; i < Model.Customers.Count; i++)
 			{
-					<input asp-for="@Model.Customers[i].Id" type="hidden"/>
-					<input asp-for="@Model.Customers[i].FirstName" type="hidden" />
-					<input asp-for="@Model.Customers[i].LastName" type="hidden" />
-					<input asp-for="@Model.Customers[i].FullName" type="hidden"/>
+				<input asp-for="@Model.Customers[i].Id" type="hidden"/>
+				<input asp-for="@Model.Customers[i].FirstName" type="hidden" />
+				<input asp-for="@Model.Customers[i].LastName" type="hidden" />
+				<input asp-for="@Model.Customers[i].FullName" type="hidden"/>
 			}
 			@for (var i = 0; i < Model.Videos.Count; i++)
 			{

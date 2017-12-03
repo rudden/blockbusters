@@ -73,6 +73,14 @@ namespace Blockbusters.Services
 			return await _context.SaveChangesAsync() >= 0;
 		}
 
+		public async Task<Rental> GetRentalAsync(int id)
+		{
+			return await _context.Rentals
+				.Include(x => x.Customer)
+				.Include(x => x.Video)
+				.FirstOrDefaultAsync(x => x.Id == id);
+		}
+
 		public async Task<IEnumerable<Rental>> GetRentalsAsync()
 		{
 			return await _context.Rentals
@@ -84,6 +92,13 @@ namespace Blockbusters.Services
 		public async Task<bool> AddRentalAsync(Rental rental)
 		{
 			_context.Rentals.Add(rental);
+			return await _context.SaveChangesAsync() >= 0;
+		}
+
+		public async Task<bool> ReturnRentalAsync(Rental rental)
+		{
+			rental.ReturnedAt = DateTime.Now;
+			_context.Rentals.Update(rental);
 			return await _context.SaveChangesAsync() >= 0;
 		}
 	}

@@ -1,38 +1,44 @@
-﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.Rental>
+﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.RentalVideo>
 
-<table class="table is-fullwidth customers">
+<table class="table is-fullwidth">
 	<thead>
 		<tr>
-			<th>Video</th>
-			<th>Customer</th>
-			<th>Rented at</th>
-			<th>Returned at</th>
+			@foreach (var th in Model.Table.Headers)
+			{
+				<th>
+					@th.Name
+					@if (th.SortItem != null)
+					{
+						<a href="/rentals/page/@Model.CurrentPage?order=@th.SortItem.Name&direction=@th.SortItem.SortDirection.ToString()"><i class="fa fa-sort" style="float: right"></i></a>
+					}
+				</th>
+			}
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var rental in Model.Data)
+		@foreach (var rental in Model.Table.Data)
 		{
-			<tr data-href="/rentals/@rental.Id">
-				<td>@rental.Video.Title</td>
-				<td>@rental.RentedByCustomer.FullName</td>
+			<tr onclick="location.href = '@(Url.Action("details", "rentals", new { id = rental.Id }))'">
+				<td>@rental.VideoTitle</td>
+				<td>@rental.CustomerName</td>
 				<td>@rental.RentedAt.ToString("yyyy-MM-dd")</td>
 				<td>
 					@if (rental.ReturnedAt == null)
 				{
 					if (rental.ShouldBeReturnedAt < DateTime.Now)
 					{
-						var overdueDays = (DateTime.Now - rental.ShouldBeReturnedAt).TotalDays;
-							<span class="tag is-danger">Overdue with @overdueDays days</span>
+						var overdueDays = Convert.ToInt32((DateTime.Now - rental.ShouldBeReturnedAt).TotalDays);
+						<span class="tag is-danger">Overdue with @overdueDays days</span>
 					}
 					else
 					{
-							<span class="tag is-warning">With customer</span>
+						<span class="tag is-warning">With customer</span>
 					}
 				}
 				else
 				{
 					var returned = Convert.ToDateTime(rental.ReturnedAt);
-						<span class="tag is-success">Returned @returned.ToString("yyyy-MM-dd")</span>
+					<span class="tag is-success">Returned @returned.ToString("yyyy-MM-dd")</span>
 				}
 				</td>
 			</tr>

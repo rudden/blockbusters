@@ -16,9 +16,20 @@ namespace Blockbusters.Controllers
 {
 	public class VideosController : Controller
 	{
-		private const int PageSize = 5;
+		private const int PageSize = 10;
 
 		private readonly IVideoRepository _repository;
+
+		private static List<TableHeader> TableHeaders { get; set; } = new List<TableHeader>
+		{
+			new TableHeader { Name = "Title", PropertyName = "Title", SortItem = new SortItem("title") },
+			new TableHeader { Name = "From year", PropertyName = "FromYear", SortItem = new SortItem("year") },
+			new TableHeader { Name = "Type of video", PropertyName = "VideoType", SortItem = new SortItem("type") },
+			new TableHeader { Name = "Length", PropertyName = "LengthInMinutes", SortItem = new SortItem("length") },
+			new TableHeader { Name = "Genres", SortItem = null },
+			new TableHeader { Name = "Price", PropertyName = "Price", SortItem = new SortItem("price") },
+			new TableHeader { Name = "Added date", PropertyName = "Added", SortItem = new SortItem("added") }
+		};
 
 		public VideosController(IVideoRepository repository)
 		{
@@ -33,23 +44,42 @@ namespace Blockbusters.Controllers
 				Header = "Videos",
 				Paging = new Paging<Video>
 				{
-					Data = videos.Take(PageSize),
+					Table = new TableData<Video>
+					{
+						Headers = TableHeaders,
+						Data = videos.Take(PageSize)
+					},
 					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)videos.Count / PageSize)),
 					Total = videos.Count
 				}
 			});
 		}
 
-		public async Task<IActionResult> Page(int id)
+		public async Task<IActionResult> Page(int id, string order, string direction)
 		{
+			var currentPage = id == 0 ? 1 : id;
+
 			var videos = Mapper.Map<List<Video>>(await _repository.GetVideosAsync());
+
+			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, videos, out var items);
+			if (adjustedHeaders != null)
+			{
+				TableHeaders = adjustedHeaders;
+			}
+
+			var data = items.Skip(PageSize * (currentPage - 1)).Take(PageSize);
+
 			return View("Index", new VideosViewModel
 			{
-				Header = $"Videos, page {id}",
+				Header = $"Videos, page {currentPage}",
 				Paging = new Paging<Video>
 				{
-					Data = videos.Skip(PageSize * (id - 1)).Take(PageSize),
-					CurrentPage = id,
+					Table = new TableData<Video>
+					{
+						Headers = TableHeaders,
+						Data = data
+					},
+					CurrentPage = currentPage,
 					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)videos.Count / PageSize)),
 					Total = videos.Count
 				}
@@ -94,7 +124,6 @@ namespace Blockbusters.Controllers
 					video.Added = DateTime.Now;
 
 					var result = await _repository.AddVideoAsync(video);
-
 					if (result)
 					{
 						await _repository.AddGenresToVideo(new KeyValuePair<int, List<int>>(video.Id, selectedGenres));

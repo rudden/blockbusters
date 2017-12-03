@@ -1,0 +1,37 @@
+﻿@model Blockbusters.ViewModels.RentalViewModel
+
+<p class="title is-1">@Model.Rental.Video.Title</p>
+<p class="subtitle is-5">Rented at @Model.Rental.RentedAt.ToString("yyyy-MM-dd") by customer <a href="/customers/details/@Model.Rental.RentedByCustomer.Id">@Model.Rental.RentedByCustomer.FullName</a></p>
+
+@if (Model.Rental.ReturnedAt == null)
+{
+	if (Model.Rental.ShouldBeReturnedAt < DateTime.Now)
+	{
+		var overdueDays = Convert.ToInt32((DateTime.Now - Model.Rental.ShouldBeReturnedAt).TotalDays);
+		<div class="notification is-danger">
+			<p>Overdue with @overdueDays days</p>
+			<a href="/rentals/return/@Model.Rental.Id" class="button is-small">Return Video</a>
+		</div>
+	}
+	else
+	{
+		<div class="notification is-info">
+			<p>The video is with the customer.</p>
+			<a href="/rentals/return/@Model.Rental.Id" class="button is-small">Return Video</a>
+		</div>
+	}
+}
+else
+{
+	var returned = Convert.ToDateTime(Model.Rental.ReturnedAt);
+	<div class="notification is-success">
+		<p>The video was returned @returned.ToString("yyyy-MM-dd")</p>
+	</div>
+}
+
+<a class="button is-small" href="/rentals">
+	<span class="icon is-small">
+		<i class="fa fa-arrow-left"></i>
+	</span>
+	<span>Back To List</span>
+</a>

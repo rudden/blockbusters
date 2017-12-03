@@ -1,17 +1,24 @@
 ﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.Customer>
 
-<table class="table is-fullwidth customers">
+<table class="table is-fullwidth">
 	<thead>
 		<tr>
-			<th>Firstname</th>
-			<th>Lastname</th>
-			<th>Email</th>
+			@foreach (var th in Model.Table.Headers)
+			{
+				<th>
+					@th.Name 
+					@if (th.SortItem != null)
+					{
+						<a href="/customers/page/@Model.CurrentPage?order=@th.SortItem.Name&direction=@th.SortItem.SortDirection.ToString()"><i class="fa fa-sort" style="float: right"></i></a>
+					}
+				</th>
+			}
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var customer in Model.Data)
+		@foreach (var customer in Model.Table.Data)
 		{
-			<tr data-href="/customers/details/@customer.Id">
+			<tr  onclick="location.href = '@(Url.Action("details", "customers", new { id = customer.Id }))'">
 				<td>@customer.FirstName</td>
 				<td>@customer.LastName</td>
 				<td>@customer.Email</td>

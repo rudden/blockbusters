@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +20,13 @@ namespace Blockbusters.Controllers
 
 		private readonly ICustomerRepository _repository;
 
+		private static List<TableHeader> TableHeaders { get; set; } = new List<TableHeader>
+		{
+			new TableHeader { Name = "Firstname", PropertyName = "FirstName", SortItem = new SortItem("firstname") },
+			new TableHeader { Name = "Lastname", PropertyName = "LastName", SortItem = new SortItem("lastname") },
+			new TableHeader { Name = "Email", PropertyName = "Email", SortItem = new SortItem("email") }
+		};
+
 		public CustomersController(ICustomerRepository repository)
 		{
 			_repository = repository;
@@ -34,23 +40,42 @@ namespace Blockbusters.Controllers
 				Header = "Customers",
 				Paging = new Paging<Customer>
 				{
-					Data = customers.Take(PageSize),
-					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)customers.Count() / PageSize)),
-					Total = customers.Count()
+					Table = new TableData<Customer>
+					{
+						Headers = TableHeaders,
+						Data = customers.Take(PageSize)
+					},
+					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)customers.Count / PageSize)),
+					Total = customers.Count
 				}
 			});
 		}
 
-		public async Task<IActionResult> Page(int id)
+		public async Task<IActionResult> Page(int id, string order, string direction)
 		{
+			var currentPage = id == 0 ? 1 : id;
+
 			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
+
+			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, customers, out var items);
+			if (adjustedHeaders != null)
+			{
+				TableHeaders = adjustedHeaders;
+			}
+
+			var data = items.Skip(PageSize * (currentPage - 1)).Take(PageSize);
+
 			return View("Index", new CustomersViewModel
 			{
-				Header = $"Customers, page {id}",
+				Header = $"Customers, page {currentPage}",
 				Paging = new Paging<Customer>
 				{
-					Data = customers.Skip(PageSize * (id - 1)).Take(PageSize),
-					CurrentPage = id,
+					Table = new TableData<Customer>
+					{
+						Headers = TableHeaders,
+						Data = data
+					},
+					CurrentPage = currentPage,
 					NumberOfPages = Convert.ToInt32(Math.Ceiling((double)customers.Count / PageSize)),
 					Total = customers.Count
 				}

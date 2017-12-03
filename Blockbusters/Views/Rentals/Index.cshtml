@@ -5,12 +5,13 @@
 	<a href="/rentals/add" class="button is-dark is-medium">New Rental</a>
 </div>
 
-@Html.Partial("Partials/Rentals/List", Model.Paging)
-
-@section Scripts {
-	<script type="text/javascript">
-		$('tr[data-href]').on("click", function() {
-			document.location = $(this).data('href');
-		});
-	</script>
+@if (Model.Paging.Table.Data.Any())
+{
+	@Html.Partial("Partials/Rentals/List", Model.Paging)
+}
+else
+{
+	<div class="notification is-danger">
+		Did not find any rental history
+	</div>
 }

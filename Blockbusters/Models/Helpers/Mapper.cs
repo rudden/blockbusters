@@ -20,5 +20,10 @@ namespace Blockbusters.Models.Helpers
 				Email = customer.Email
 			};
 		}
+
+		public string MapCustomerName(Entities.Customer customer)
+		{
+			return $"{customer.FirstName} {customer.LastName}";
+		}
 	}
 }

@@ -5,12 +5,13 @@
 	<a href="/customers/add" class="button is-dark is-medium">New Customer</a>	
 </div>
 
-@Html.Partial("Partials/Customers/List", Model.Paging)
-
-@section Scripts {
-	<script type="text/javascript">
-		$('tr[data-href]').on("click", function() {
-			document.location = $(this).data('href');
-		});
-	</script>
+@if (Model.Paging.Table.Data.Any())
+{
+	@Html.Partial("Partials/Customers/List", Model.Paging)
+}
+else
+{
+	<div class="notification is-danger">
+		Did not find any customers
+	</div>
 }

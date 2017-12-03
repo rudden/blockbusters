@@ -1,20 +1,26 @@
 ﻿@model Blockbusters.ViewModels.VideoViewModel
 
-<p class="title is-1 is-spaced">@Model.Header</p>
+<p class="title is-1">@Model.Header</p>
+<p class="subtitle is-5">@Model.Video.Subtitle</p>
 
 <article class="message">
 	<div class="message-body">
+		<p class="title is-5">Storyline</p>
 		@Model.Video.Storyline
+		<hr/>
+		<p class="title is-5">Genres</p>
 		<div class="tags" style="margin-top: 1rem; margin-bottom: -0.5rem">
 			@foreach (var genre in Model.Video.Genres)
 			{
 				<span class="tag is-dark">@genre</span>
 			}
 		</div>
-		<hr />
+		<hr/>
+		<p class="title is-5">@Model.Video.VideoType</p>
+		<hr/>
 		<div class="buttons">
 			<a href="#" class="button is-success is-small"><span class="icon is-small"><i class="fa fa-credit-card"></i></span><span>Rent Movie</span></a>
-			<a href="/videos" class="button is-primary is-small"><span class="icon is-small"><i class="fa fa-arrow-left"></i></span><span>Back To List</span></a>
+			<a href="/videos" class="button is-small"><span class="icon is-small"><i class="fa fa-arrow-left"></i></span><span>Back To List</span></a>
 		</div>
 	</div>
 </article>
