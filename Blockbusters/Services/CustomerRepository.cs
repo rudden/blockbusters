@@ -18,12 +18,23 @@ namespace Blockbusters.Services
 
 		public async Task<Customer> GetCustomerAsync(int id)
 		{
-			return await _context.FindAsync<Customer>(id);
+			return await _context.Customers.Include(x => x.Rentals).FirstOrDefaultAsync(x => x.Id == id);
 		}
 
 		public async Task<List<Customer>> GetCustomersAsync()
 		{
-			return await _context.Customers.OrderByDescending(v => v.LastName).ToListAsync();
+			return await _context.Customers.Include(x => x.Rentals).OrderByDescending(v => v.LastName).ToListAsync();
+		}
+
+		public async Task<bool> AddCustomerAsync(Customer customer)
+		{
+			_context.Customers.Add(customer);
+			return await _context.SaveChangesAsync() >= 0;
+		}
+
+		public Task<bool> DeleteCustomerAsync(int id)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

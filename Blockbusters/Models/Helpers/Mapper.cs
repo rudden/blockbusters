@@ -1,15 +1,24 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Blockbusters.Models.Helpers
 {
 	public class Mapper
 	{
-		public IEnumerable<Genre> MapGenres(string genres)
+		public IEnumerable<string> MapGenres(ICollection<Entities.VideoToGenre> videoToGenres)
 		{
-			return genres.Split(",").Select(EnumHelper.FromString<Genre>).ToList();
+			return videoToGenres.Select(videoToGenre => videoToGenre.Genre.Name).ToList();
+		}
+
+		public Customer MapRentalCustomer(Entities.Customer customer)
+		{
+			return new Customer
+			{
+				Id = customer.Id,
+				FirstName = customer.FirstName,
+				LastName = customer.LastName,
+				Email = customer.Email
+			};
 		}
 	}
 }

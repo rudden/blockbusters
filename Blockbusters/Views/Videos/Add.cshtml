@@ -1,0 +1,90 @@
+﻿@model Blockbusters.ViewModels.NewVideoViewModel
+
+<p class="title is-1 is-spaced">Add A New Video</p>
+
+<form asp-controller="Videos" asp-action="Add" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form">
+	<div class="card">
+		<div class="card-icon">
+			<i class="fa fa-video-camera"></i>
+		</div>
+		<div class="card-content">
+			<div class="field">
+				<label asp-for="Title" class="label"></label>
+				<div class="control">
+					<input asp-for="Title" class="input" type="text">
+				</div>
+			</div>
+			<div class="field">
+				<label asp-for="Subtitle" class="label"></label>
+				<div class="control">
+					<textarea asp-for="Subtitle" class="textarea"></textarea>
+				</div>
+			</div>
+			<div class="field">
+				<label asp-for="Storyline" class="label"></label>
+				<div class="control">
+					<textarea asp-for="Storyline" class="textarea"></textarea>
+				</div>
+			</div>
+			<div class="field is-horizontal">
+				<div class="field-body">
+					<div class="field">
+						<label asp-for="FromYear" class="label"></label>
+						<div class="control">
+							<input asp-for="FromYear" class="input" type="text">
+						</div>
+					</div>
+					<div class="field">
+						<label asp-for="LengthInMinutes" class="label"></label>
+						<div class="control">
+							<input asp-for="LengthInMinutes" class="input" type="number">
+						</div>
+					</div>
+					<div class="field">
+						<label asp-for="Price" class="label"></label>
+						<div class="control">
+							<input asp-for="Price" class="input" type="number">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label asp-for="VideoTypeId" class="label"></label>
+				<div class="control">
+					@for (var i = 0; i < Model.VideoTypes.Count; i++)
+					{
+						<label class="radio">
+							<input asp-for="VideoTypeId" type="radio" value="@Model.VideoTypes[i].Id"/>
+							<input asp-for="@Model.VideoTypes[i].Id" type="hidden"/>
+							<input asp-for="@Model.VideoTypes[i].Name" type="hidden" />
+							@Model.VideoTypes[i].Name
+						</label>
+					}
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Genres</label>
+				<div class="control">
+					@for (var i = 0; i < Model.Genres.Count; i++)
+					{
+						<label class="checkbox">
+							<input asp-for="@Model.Genres[i].IsChecked" type="checkbox"/>
+							<input asp-for="@Model.Genres[i].Id" type="hidden"/>
+							<input asp-for="@Model.Genres[i].Name" type="hidden"/>
+							@Model.Genres[i].Name
+						</label>
+					}
+				</div>
+			</div>
+			@if (!ViewData.ModelState.IsValid)
+			{
+				@Html.ValidationSummary(false, "", new { @class = "notification is-danger" })
+			}
+			<div class="field">
+				<button type="submit" class="button is-success is-fullwidth">
+					Save <i class="fa fa-plus" style="margin-left: 7px"></i>
+				</button>
+			</div>
+		</div>
+</div>
+</form>

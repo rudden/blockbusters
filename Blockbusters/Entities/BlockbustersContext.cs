@@ -18,6 +18,9 @@ namespace Blockbusters.Entities
 		public DbSet<Video> Videos { get; set; }
 		public DbSet<Customer> Customers { get; set; }
 		public DbSet<Rental> Rentals { get; set; }
+		public DbSet<Genre> Genres { get; set; }
+		public DbSet<VideoType> VideoTypes { get; set; }
+		public DbSet<VideoToGenre> VideoToGenres { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

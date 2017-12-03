@@ -1,2 +1,11 @@
 ﻿@model Blockbusters.ViewModels.CustomerViewModel
 
+<p class="title is-1">@Model.Customer.FirstName @Model.Customer.LastName</p>
+<p class="subtitle is-5">@Model.Customer.Email</p>
+
+<a class="button is-small" href="/customers">
+	<span class="icon is-small">
+		<i class="fa fa-arrow-left"></i>
+	</span>
+	<span>Back To List</span>
+</a>

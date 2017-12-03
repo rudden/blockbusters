@@ -1,0 +1,53 @@
+﻿@model Blockbusters.ViewModels.NewRentalViewModel
+
+<p class="title is-1 is-spaced">Add A New Video</p>
+
+<form asp-controller="Rentals" asp-action="Add" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form">
+	<div class="card">
+		<div class="card-icon">
+			<i class="fa fa-video-camera"></i>
+		</div>
+		<div class="card-content">
+			<div class="field">
+				<label class="label">Customers</label>
+				<div class="control">
+					<div class="select">
+						<select asp-for="CustomerId" asp-items="@(new SelectList(Model.Customers, "Id", "FullName"))"><option value="">Select a customer</option></select>
+					</div>
+				</div>
+			</div>
+			<div class="field">
+				<label class="label">Videos</label>
+				<div class="control">
+					<div class="select">
+						<select asp-for="VideoId" asp-items="@(new SelectList(Model.Videos, "Id", "Title"))"><option value="">Select a video</option></select>
+					</div>
+				</div>
+			</div>
+			
+			<!-- store in model after posts -->
+			@for (var i = 0; i < Model.Customers.Count; i++)
+			{
+					<input asp-for="@Model.Customers[i].Id" type="hidden"/>
+					<input asp-for="@Model.Customers[i].FirstName" type="hidden" />
+					<input asp-for="@Model.Customers[i].LastName" type="hidden" />
+					<input asp-for="@Model.Customers[i].FullName" type="hidden"/>
+			}
+			@for (var i = 0; i < Model.Videos.Count; i++)
+			{
+				<input asp-for="@Model.Videos[i].Id" type="hidden"/>
+				<input asp-for="@Model.Videos[i].Title" type="hidden"/>
+			}
+
+			@if (!ViewData.ModelState.IsValid)
+			{
+				@Html.ValidationSummary(false, "", new { @class = "notification is-danger" })
+			}
+			<div class="field">
+				<button type="submit" class="button is-success is-fullwidth">
+					Save <i class="fa fa-plus" style="margin-left: 7px"></i>
+				</button>
+			</div>
+		</div>
+</div>
+</form>

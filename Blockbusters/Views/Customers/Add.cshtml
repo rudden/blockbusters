@@ -1,0 +1,40 @@
+﻿@model Blockbusters.ViewModels.NewCustomerViewModel
+
+<p class="title is-1 is-spaced">Add A New Video</p>
+
+<form asp-controller="Customers" asp-action="Add" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" role="form">
+	<div class="card">
+		<div class="card-icon">
+			<i class="fa fa-user"></i>
+		</div>
+		<div class="card-content">
+			<div class="field">
+				<label asp-for="FirstName" class="label"></label>
+				<div class="control">
+					<input asp-for="FirstName" class="input" type="text">
+				</div>
+			</div>
+			<div class="field">
+				<label asp-for="LastName" class="label"></label>
+				<div class="control">
+					<input asp-for="LastName" class="input" type="text">
+				</div>
+			</div>
+			<div class="field">
+				<label asp-for="Email" class="label"></label>
+				<div class="control">
+					<input asp-for="Email" class="input" type="email">
+				</div>
+			</div>
+			@if (!ViewData.ModelState.IsValid)
+			{
+				@Html.ValidationSummary(false, "", new { @class = "notification is-danger" })
+			}
+			<div class="field">
+				<button type="submit" class="button is-success is-fullwidth">
+					Save <i class="fa fa-plus" style="margin-left: 7px"></i>
+				</button>
+			</div>
+		</div>
+</div>
+</form>

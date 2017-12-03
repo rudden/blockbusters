@@ -36,6 +36,18 @@ namespace Blockbusters.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Blockbusters.Entities.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("Blockbusters.Entities.Rental", b =>
                 {
                     b.Property<int>("Id")
@@ -69,10 +81,6 @@ namespace Blockbusters.Migrations
 
                     b.Property<string>("FromYear");
 
-                    b.Property<string>("Genre");
-
-                    b.Property<string>("ImageUrl");
-
                     b.Property<int>("LengthInMinutes");
 
                     b.Property<decimal>("Price");
@@ -83,11 +91,43 @@ namespace Blockbusters.Migrations
 
                     b.Property<string>("Title");
 
-                    b.Property<string>("VideoType");
+                    b.Property<int>("VideoTypeId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VideoTypeId");
+
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("Blockbusters.Entities.VideoToGenre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("GenreId");
+
+                    b.Property<int>("VideoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("VideoToGenres");
+                });
+
+            modelBuilder.Entity("Blockbusters.Entities.VideoType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VideoTypes");
                 });
 
             modelBuilder.Entity("Blockbusters.Entities.Rental", b =>
@@ -95,6 +135,27 @@ namespace Blockbusters.Migrations
                     b.HasOne("Blockbusters.Entities.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("RentedByCustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Blockbusters.Entities.Video", "Video")
+                        .WithMany()
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Blockbusters.Entities.Video", b =>
+                {
+                    b.HasOne("Blockbusters.Entities.VideoType", "VideoType")
+                        .WithMany()
+                        .HasForeignKey("VideoTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Blockbusters.Entities.VideoToGenre", b =>
+                {
+                    b.HasOne("Blockbusters.Entities.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Blockbusters.Entities.Video", "Video")

@@ -1,0 +1,42 @@
+﻿@model Blockbusters.Models.Helpers.Paging<Blockbusters.Models.Video>
+
+@foreach (var video in Model.Data)
+{
+	<div class="card">
+		<div class="card-icon">
+			<i class="fa fa-video-camera"></i>
+		</div>
+		<div class="card-content">
+			<div class="media-content">
+				<div class="media-left">
+					<p class="title is-4">@video.Title</p>
+					<p class="subtitle is-6"><small>@video.Subtitle</small></p>
+				</div>
+			</div>
+		</div>
+		<footer class="card-footer">
+			<a href="#" class="card-footer-item">Rent Movie <i class="fa fa-credit-card" style="margin-left: 7px"></i></a>
+			<a href="/videos/@video.Id" class="card-footer-item">View Details <i class="fa fa-info-circle" style="margin-left: 7px"></i></a>
+		</footer>
+	</div>
+}
+@if (Model.NumberOfPages > 1)
+{
+	<nav class="pagination">
+		<ul class="pagination-list">
+			@for (var i = 1; i <= Model.NumberOfPages; i++)
+			{
+				<li>
+					@if (Model.CurrentPage == 0 && i == 1 || Model.CurrentPage == i)
+					{
+						<a class="pagination-link is-current" href="/videos/page/@i">@i</a>
+					}
+					else
+					{
+						<a class="pagination-link" href="/videos/page/@i">@i</a>
+					}
+				</li>
+			}
+		</ul>
+	</nav>
+}

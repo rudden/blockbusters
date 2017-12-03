@@ -8,5 +8,7 @@ namespace Blockbusters.Services.Contracts
 	{
 		Task<Customer> GetCustomerAsync(int id);
 		Task<List<Customer>> GetCustomersAsync();
+		Task<bool> AddCustomerAsync(Customer customer);
+		Task<bool> DeleteCustomerAsync(int id);
 	}
 }

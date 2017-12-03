@@ -8,6 +8,7 @@ using Blockbusters.Models.Helpers;
 using Blockbusters.Services.Contracts;
 using Blockbusters.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mapper = AutoMapper.Mapper;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,7 +32,7 @@ namespace Blockbusters.Controllers
 			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
 			return View(new CustomersViewModel
 			{
-				Header = "Videos",
+				Header = "Customers",
 				Paging = new Paging<Customer>
 				{
 					Data = customers.Take(PageSize),
@@ -50,6 +51,39 @@ namespace Blockbusters.Controllers
 			{
 				Customer = customer
 			});
+		}
+
+		[Route("[controller]/add")]
+		public IActionResult Add()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Route("[controller]/add")]
+		public async Task<IActionResult> Add(NewCustomerViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				try
+				{
+					var customer = Mapper.Map<Entities.Customer>(model);
+
+					var result = await _repository.AddCustomerAsync(customer);
+
+					if (!result)
+					{
+						ModelState.AddModelError("", "Could not add the customer. Please try again!");
+					}
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					ModelState.AddModelError("", "Could not add the customer. Please try again!");
+				}
+				return RedirectToAction("index");
+			}
+			return View(model);
 		}
 	}
 }

@@ -1,8 +1,11 @@
 ﻿@model Blockbusters.ViewModels.CustomersViewModel
+	
+<div class="header">
+	<p class="title is-1 is-spaced">@Model.Header</p>
+	<a href="/customers/add" class="button is-dark is-medium">New Customer</a>	
+</div>
 
-<p class="title is-1 is-spaced">@Model.Header</p>
-
-<table class="table is-fullwidth">
+<table class="table is-fullwidth customers">
 	<thead>
 	<tr>
 		<th>Firstname</th>
@@ -13,7 +16,7 @@
 	<tbody>
 	@foreach (var customer in Model.Paging.Data)
 	{
-		<tr>
+		<tr data-href="/customers/@customer.Id">
 			<td>@customer.FirstName</td>
 			<td>@customer.LastName</td>
 			<td>@customer.Email</td>
@@ -21,3 +24,12 @@
 	}
 	</tbody>
 </table>
+
+
+@section Scripts {
+	<script type="text/javascript">
+		$('tr[data-href]').on("click", function() {
+			document.location = $(this).data('href');
+		});
+	</script>
+}

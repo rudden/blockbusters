@@ -6,6 +6,10 @@
 	background-color: #fff;
 }
 
+aside.aside.hero {
+	padding-right: 0;
+}
+
 .nav.is-dark {
 	background-color: #232B2D;
 	color: #F6F7F7;
@@ -134,6 +138,19 @@
 	padding-right: 12px;
 }
 
+.items .header {
+	display: flow-root;
+}
+
+.items .header p {
+	float: left;
+}
+
+.items .header a {
+	float: right;
+	margin-top: 10px;
+}
+
 .items .card {
 	width: 100%;
 	margin-bottom: 20px;
@@ -146,6 +163,11 @@
 
 .items strong {
 	color: #5D5D5D;
+}
+
+table.customers tbody tr:hover {
+	cursor: pointer;
+	background-color: #dedede;
 }
 
 .avatar img {

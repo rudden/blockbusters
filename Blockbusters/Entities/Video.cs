@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,12 +15,16 @@ namespace Blockbusters.Entities
 		public string Subtitle { get; set; }
 		public string Storyline { get; set; }
 		public int LengthInMinutes { get; set; }
-		public string VideoType { get; set; }
-		public string Genre { get; set; }
-		public string ImageUrl { get; set; }
+
+		[ForeignKey("VideoTypeId")]
+		public VideoType VideoType { get; set; }
+		public int VideoTypeId { get; set; }
 
 		public decimal Price { get; set; }
 		public string FromYear { get; set; }
 		public DateTime Added { get; set; }
+
+		public ICollection<Rental> Rentals { get; set; }
+		public ICollection<VideoToGenre> VideoToGenres { get; set; }
 	}
 }

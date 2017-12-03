@@ -1,0 +1,54 @@
+﻿@model Blockbusters.ViewModels.RentalsViewModel
+
+<div class="header">
+	<p class="title is-1 is-spaced">@Model.Header</p>
+	<a href="/rentals/add" class="button is-dark is-medium">New Rental</a>
+</div>
+
+<table class="table is-fullwidth customers">
+	<thead>
+	<tr>
+		<th>Video</th>
+		<th>Customer</th>
+		<th>Rented at</th>
+		<th>Returned at</th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach (var rental in Model.Paging.Data)
+	{
+		<tr data-href="/rentals/@rental.Id">
+			<td>@rental.Video.Title</td>
+			<td>@rental.RentedByCustomer.FullName</td>
+			<td>@rental.RentedAt.ToString("yyyy-MM-dd")</td>
+			<td>
+				@if (rental.ReturnedAt == null)
+				{
+					if (rental.ShouldBeReturnedAt < DateTime.Now)
+					{
+						var overdueDays = (DateTime.Now - rental.ShouldBeReturnedAt).TotalDays;
+						<span class="tag is-danger">Overdue with @overdueDays days</span>
+					}
+					else
+					{
+						<span class="tag is-warning">With customer</span>
+					}
+				}
+				else
+				{
+					var returned = Convert.ToDateTime(rental.ReturnedAt);
+					<span class="tag is-success">Returned @returned.ToString("yyyy-MM-dd")</span>
+				}
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+@section Scripts {
+	<script type="text/javascript">
+		$('tr[data-href]').on("click", function() {
+			document.location = $(this).data('href');
+		});
+	</script>
+}

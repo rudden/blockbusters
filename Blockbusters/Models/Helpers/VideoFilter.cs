@@ -10,7 +10,7 @@ namespace Blockbusters.Models.Helpers
 		public string VideoName { get; set; }
 		public string FromYear { get; set; }
 		public decimal MaxPrice { get; set; }
-		public IEnumerable<Genre> Genres { get; set; }
-		public IEnumerable<VideoType> VideoTypes { get; set; }
+		//public IEnumerable<Genre> Genres { get; set; }
+		//public IEnumerable<VideoType> VideoTypes { get; set; }
 	}
 }

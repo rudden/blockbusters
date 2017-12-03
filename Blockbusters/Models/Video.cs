@@ -11,33 +11,11 @@ namespace Blockbusters.Models
 		public string Subtitle { get; set; }
 		public string Storyline { get; set; }
 		public int LengthInMinutes { get; set; }
-		public VideoType VideoType { get; set; }
-		public IEnumerable<Genre> Genres { get; set; }
-
+		public string VideoType { get; set; }
+		public IEnumerable<string> Genres { get; set; }
+		public IEnumerable<Rental> Rentals { get; set; }
 		public decimal Price { get; set; }
 		public string FromYear { get; set; }
 		public DateTime Added { get; set; }
-	}
-
-	public enum VideoType
-	{
-		DVD,
-		VHS,
-		Bluray
-	}
-
-	public enum Genre
-	{
-		Action,
-		Drama,
-		Anime,
-		Thriller,
-		Horror,
-		Comedy,
-		Crime,
-		Fantasy,
-		Family,
-		Adventure,
-		SciFi
 	}
 }

@@ -9,5 +9,12 @@ namespace Blockbusters.Services.Contracts
 		Task<Video> GetVideoAsync(int id);
 		//Task<Video> GetVideoOnFilterAsync(VideoFilter filter);
 		Task<List<Video>> GetVideosAsync();
+		Task<Genre> GetGenreAsync(int id);
+		Task<IEnumerable<Genre>> GetGenresAsync();
+		Task<IEnumerable<VideoType>> GetVideoTypesAsync();
+		Task<bool> AddVideoAsync(Video video);
+		Task<bool> AddGenresToVideo(KeyValuePair<int, List<int>> keyValuePair);
+		Task<IEnumerable<Rental>> GetRentalsAsync();
+		Task<bool> AddRentalAsync(Rental rental);
 	}
 }
