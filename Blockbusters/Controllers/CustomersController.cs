@@ -18,7 +18,8 @@ namespace Blockbusters.Controllers
 	{
 		private const int PageSize = 10;
 
-		private readonly ICustomerRepository _repository;
+		private readonly ICustomerRepository _customerRepository;
+		private readonly IVideoRepository _videoRepository;
 
 		private static List<TableHeader> TableHeaders { get; set; } = new List<TableHeader>
 		{
@@ -27,14 +28,15 @@ namespace Blockbusters.Controllers
 			new TableHeader { Name = "Email", PropertyName = "Email", SortItem = new SortItem("email") }
 		};
 
-		public CustomersController(ICustomerRepository repository)
+		public CustomersController(ICustomerRepository customerRepository, IVideoRepository videoRepository)
 		{
-			_repository = repository;
+			_customerRepository = customerRepository;
+			_videoRepository = videoRepository;
 		}
 
 		public async Task<IActionResult> Index()
 		{
-			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
+			var customers = Mapper.Map<List<Customer>>(await _customerRepository.GetCustomersAsync());
 			return View(new CustomersViewModel
 			{
 				Header = "Customers",
@@ -55,7 +57,7 @@ namespace Blockbusters.Controllers
 		{
 			var currentPage = id == 0 ? 1 : id;
 
-			var customers = Mapper.Map<List<Customer>>(await _repository.GetCustomersAsync());
+			var customers = Mapper.Map<List<Customer>>(await _customerRepository.GetCustomersAsync());
 
 			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, customers, out var items);
 			if (adjustedHeaders != null)
@@ -84,10 +86,10 @@ namespace Blockbusters.Controllers
 
 		public async Task<IActionResult> Details(int id)
 		{
-			var customer = Mapper.Map<Customer>(await _repository.GetCustomerAsync(id));
 			return View(new CustomerViewModel
 			{
-				Customer = customer
+				Customer = Mapper.Map<Customer>(await _customerRepository.GetCustomerAsync(id)),
+				Rentals = Mapper.Map<IEnumerable<CustomerRental>>(await _videoRepository.GetRentalsOnCustomerIdAsync(id))
 			});
 		}
 
@@ -106,7 +108,7 @@ namespace Blockbusters.Controllers
 				{
 					var customer = Mapper.Map<Entities.Customer>(model);
 
-					var result = await _repository.AddCustomerAsync(customer);
+					var result = await _customerRepository.AddCustomerAsync(customer);
 
 					if (!result)
 					{

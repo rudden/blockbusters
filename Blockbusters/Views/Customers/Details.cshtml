@@ -3,6 +3,53 @@
 <p class="title is-1">@Model.Customer.FirstName @Model.Customer.LastName</p>
 <p class="subtitle is-5">@Model.Customer.Email</p>
 
+<div class="box">
+	<p class="title is-3">Rented movies</p>
+	<table class="table is-fullwidth">
+		<thead>
+			<tr>
+				<th>Video</th>
+				<th>Price</th>
+				<th>Type</th>
+				<th>Rented at</th>
+				<th>Should return at</th>
+				<th>Returned at</th>
+			</tr>
+		</thead>
+		<tbody>
+		@foreach (var rental in Model.Rentals)
+		{
+			<tr onclick="location.href = '@(Url.Action("details", "rentals", new {id = rental.Id}))'">
+				<td>@rental.Video.Title</td>
+				<td>@rental.Video.Price</td>
+				<td>@rental.Video.VideoType</td>
+				<td>@rental.RentedAt.ToString("yyyy-MM-dd")</td>
+				<td>@rental.ShouldBeReturnedAt.ToString("yyyy-MM-dd")</td>
+				<td>
+					@if (rental.ReturnedAt == null)
+					{
+						if (rental.ShouldBeReturnedAt < DateTime.Now)
+						{
+							var overdueDays = Convert.ToInt32((DateTime.Now - rental.ShouldBeReturnedAt).TotalDays);
+							<span class="tag is-danger">Overdue with @overdueDays days</span>
+						}
+						else
+						{
+							<span class="tag is-warning">With customer</span>
+						}
+					}
+					else
+					{
+						var returned = Convert.ToDateTime(rental.ReturnedAt);
+						<span class="tag is-success">Returned @returned.ToString("yyyy-MM-dd")</span>
+					}
+				</td>
+			</tr>
+		}
+		</tbody>
+	</table>
+</div>
+
 <a class="button is-small" href="/customers">
 	<span class="icon is-small">
 		<i class="fa fa-arrow-left"></i>

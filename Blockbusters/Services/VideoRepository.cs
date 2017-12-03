@@ -89,6 +89,14 @@ namespace Blockbusters.Services
 				.OrderByDescending(x => x.RentedAt).ToListAsync();
 		}
 
+		public async Task<IEnumerable<Rental>> GetRentalsOnCustomerIdAsync(int id)
+		{
+			return await _context.Rentals
+				.Include(x => x.Video)
+				.Where(c => c.RentedByCustomerId == id)
+				.OrderByDescending(x => x.RentedAt).ToListAsync();
+		}
+
 		public async Task<bool> AddRentalAsync(Rental rental)
 		{
 			_context.Rentals.Add(rental);

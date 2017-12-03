@@ -16,6 +16,7 @@ namespace Blockbusters.Services.Contracts
 		Task<bool> AddGenresToVideo(KeyValuePair<int, List<int>> keyValuePair);
 		Task<Rental> GetRentalAsync(int id);
 		Task<IEnumerable<Rental>> GetRentalsAsync();
+		Task<IEnumerable<Rental>> GetRentalsOnCustomerIdAsync(int id);
 		Task<bool> AddRentalAsync(Rental rental);
 		Task<bool> ReturnRentalAsync(Rental rental);
 	}
