@@ -4,7 +4,7 @@
 <p class="subtitle is-5">@Model.Customer.Email</p>
 
 <div class="box">
-	<p class="title is-3">Rented movies</p>
+	<p class="title is-4">Rented movies</p>
 	<table class="table is-fullwidth">
 		<thead>
 			<tr>
@@ -50,9 +50,5 @@
 	</table>
 </div>
 
-<a class="button is-small" href="/customers">
-	<span class="icon is-small">
-		<i class="fa fa-arrow-left"></i>
-	</span>
-	<span>Back To List</span>
-</a>
+<a href="/customers/delete/@Model.Customer.Id" class="button is-small is-danger"><span class="icon is-small"><i class="fa fa-trash-o"></i></span><span>Delete Customer</span></a>
+<a href="/customers" class="button is-small"><span class="icon is-small"><i class="fa fa-arrow-left"></i></span><span>Back To List</span></a>

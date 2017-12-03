@@ -123,5 +123,24 @@ namespace Blockbusters.Controllers
 			}
 			return View(model);
 		}
+
+		public async Task<IActionResult> Delete(int id)
+		{
+			var rentals = await _videoRepository.GetRentalsOnCustomerIdAsync(id);
+			foreach (var rental in rentals)
+			{
+				await _videoRepository.DeleteRentalAsync(rental);
+			}
+			var customer = await _customerRepository.GetCustomerAsync(id);
+			var result = await _customerRepository.DeleteCustomerAsync(customer);
+			if (result)
+			{
+				return RedirectToAction("index");
+			}
+			return View("details", new CustomerViewModel
+			{
+				Customer = Mapper.Map<Customer>(customer)
+			});
+		}
 	}
 }

@@ -141,5 +141,19 @@ namespace Blockbusters.Controllers
 			}
 			return View(model);
 		}
+
+		public async Task<IActionResult> Delete(int id)
+		{
+			var video = await _repository.GetVideoAsync(id);
+			var result = await _repository.DeleteVideoAsync(video);
+			if (result)
+			{
+				return RedirectToAction("index");
+			}
+			return View("details", new VideoViewModel
+			{
+				Video = Mapper.Map<Video>(video)
+			});
+		}
 	}
 }

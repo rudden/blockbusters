@@ -32,9 +32,10 @@ namespace Blockbusters.Services
 			return await _context.SaveChangesAsync() >= 0;
 		}
 
-		public Task<bool> DeleteCustomerAsync(int id)
+		public async Task<bool> DeleteCustomerAsync(Customer customer)
 		{
-			throw new System.NotImplementedException();
+			_context.Customers.Remove(customer);
+			return await _context.SaveChangesAsync() >= 0;
 		}
 	}
 }

@@ -14,10 +14,12 @@ namespace Blockbusters.Services.Contracts
 		Task<IEnumerable<VideoType>> GetVideoTypesAsync();
 		Task<bool> AddVideoAsync(Video video);
 		Task<bool> AddGenresToVideo(KeyValuePair<int, List<int>> keyValuePair);
+		Task<bool> DeleteVideoAsync(Video video);
 		Task<Rental> GetRentalAsync(int id);
 		Task<IEnumerable<Rental>> GetRentalsAsync();
 		Task<IEnumerable<Rental>> GetRentalsOnCustomerIdAsync(int id);
 		Task<bool> AddRentalAsync(Rental rental);
 		Task<bool> ReturnRentalAsync(Rental rental);
+		Task<bool> DeleteRentalAsync(Rental rental);
 	}
 }
