@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,6 +27,9 @@ namespace Blockbusters.Entities
 				_context.Customers.Add(new Customer { FirstName = "Maria", LastName = "Green", Email = "maria.e.green@hotmail.com" });
 				_context.Customers.Add(new Customer { FirstName = "Ludvig", LastName = "Rudén", Email = "luddekudde@gmail.com" });
 				_context.Customers.Add(new Customer { FirstName = "Moa", LastName = "Tolleqvist", Email = "qvistmoa@live.com" });
+				_context.Customers.Add(new Customer { FirstName = "Yvonne", LastName = "Malmberg", Email = "yvomalm62@gmail.com" });
+				_context.Customers.Add(new Customer { FirstName = "Claes", LastName = "Claesson", Email = "claesclaes@gmail.com" });
+				_context.Customers.Add(new Customer { FirstName = "Jennie", LastName = "Jönsson", Email = "jjsson@hotmail.com" });
 			}
 
 			// add some genres
@@ -53,6 +55,8 @@ namespace Blockbusters.Entities
 				_context.VideoTypes.Add(new VideoType { Name = "DVD" });
 				_context.VideoTypes.Add(new VideoType { Name = "Bluray" });
 			}
+
+			await _context.SaveChangesAsync();
 
 			// add some videos
 			if (!_context.Videos.Any())
@@ -156,48 +160,80 @@ namespace Blockbusters.Entities
 					FromYear = "2007",
 					Added = DateTime.Now.AddDays(-33)
 				});
+				_context.Videos.Add(new Video
+				{
+					Title = "The Great Escape",
+					Subtitle = " Allied prisoners of war plan for several hundred of their number to escape from a German camp during World War II.",
+					Storyline = "Based on a true story, a group of allied escape artist-type prisoners-of-war (POWs) are all put in an 'escape proof' camp. Their leader decides to try to take out several hundred all at once. The first half of the film is played for comedy as the prisoners mostly outwit their jailers to dig the escape tunnel. The second half is high adventure as they use boats and trains and planes to get out of occupied Europe.",
+					LengthInMinutes = 172,
+					VideoTypeId = 1,
+					Price = 19,
+					FromYear = "1963",
+					Added = DateTime.Now.AddDays(-13)
+				});
+				_context.Videos.Add(new Video
+				{
+					Title = "Up",
+					Subtitle = "  Seventy-eight year old Carl Fredricksen travels to Paradise Falls in his home equipped with balloons, inadvertently taking a young stowaway. ",
+					Storyline = "Carl Fredricksen as a boy wanted to explore South America and find the forbidden Paradise Falls. About 64 years later he gets to begin his journey along with a Boy Scout named Russel with help from 500 balloons.On their journey they discover many new friends including a talking dog and Carl and Russel figure out that someone evil plans.Carl soon realizes that this evildoer is his childhood idol.Will they be able to defeat him and will they find Paradise Falls?",
+					LengthInMinutes = 96,
+					VideoTypeId = 2,
+					Price = 29,
+					FromYear = "2009",
+					Added = DateTime.Now.AddDays(-20)
+				});
 			}
+
+			await _context.SaveChangesAsync();
 
 			// add some videotogenres
 			if (!_context.VideoToGenres.Any())
 			{
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 28, GenreId = 7 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 28, GenreId = 2 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 29, GenreId = 3 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 29, GenreId = 8 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 29, GenreId = 9 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 30, GenreId = 7 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 30, GenreId = 2 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 31, GenreId = 1 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 31, GenreId = 2 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 31, GenreId = 4 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 32, GenreId = 4 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 32, GenreId = 10 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 32, GenreId = 11 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 33, GenreId = 6 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 33, GenreId = 8 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 33, GenreId = 9 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 33, GenreId = 10 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 34, GenreId = 6 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 34, GenreId = 2 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 34, GenreId = 7 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 35, GenreId = 4 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 35, GenreId = 2 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 35, GenreId = 7 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 36, GenreId = 10 });
-				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 36, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 1, GenreId = 7 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 1, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 2, GenreId = 3 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 2, GenreId = 8 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 2, GenreId = 9 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 3, GenreId = 7 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 3, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 4, GenreId = 1 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 4, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 4, GenreId = 4 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 5, GenreId = 4 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 5, GenreId = 10 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 5, GenreId = 11 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 6, GenreId = 6 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 6, GenreId = 8 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 6, GenreId = 9 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 6, GenreId = 10 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 7, GenreId = 6 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 7, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 7, GenreId = 7 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 8, GenreId = 4 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 8, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 8, GenreId = 7 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 9, GenreId = 10 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 9, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 10, GenreId = 2 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 10, GenreId = 10 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 10, GenreId = 4 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 11, GenreId = 9 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 11, GenreId = 10 });
+				_context.VideoToGenres.Add(new VideoToGenre { VideoId = 11, GenreId = 6 });
 			}
 
 			// add some rentals
 			if (!_context.Rentals.Any())
 			{
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 1, VideoId = 31, RentedAt = DateTime.Now.AddDays(-33), ShouldBeReturnedAt = DateTime.Now.AddDays(-30), ReturnedAt = DateTime.Now.AddDays(-30) });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 1, VideoId = 35, RentedAt = DateTime.Now.AddDays(-12), ShouldBeReturnedAt = DateTime.Now.AddDays(-9), ReturnedAt = DateTime.Now.AddDays(-8) });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 1, VideoId = 30, RentedAt = DateTime.Now.AddDays(-3), ShouldBeReturnedAt = DateTime.Now, ReturnedAt = DateTime.Now });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 34, RentedAt = DateTime.Now.AddDays(-50), ShouldBeReturnedAt = DateTime.Now.AddDays(-47), ReturnedAt = DateTime.Now.AddDays(-43) });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 28, RentedAt = DateTime.Now.AddDays(-36), ShouldBeReturnedAt = DateTime.Now.AddDays(-33), ReturnedAt = DateTime.Now.AddDays(-33) });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 31, RentedAt = DateTime.Now.AddDays(-29), ShouldBeReturnedAt = DateTime.Now.AddDays(-26), ReturnedAt = DateTime.Now.AddDays(-23) });
-				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 36, RentedAt = DateTime.Now.AddDays(-100), ShouldBeReturnedAt = DateTime.Now.AddDays(-97), ReturnedAt = DateTime.Now.AddDays(-96) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 1, VideoId = 1, RentedAt = DateTime.Now.AddDays(-33), ShouldBeReturnedAt = DateTime.Now.AddDays(-30), ReturnedAt = DateTime.Now.AddDays(-30) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 2, VideoId = 7, RentedAt = DateTime.Now.AddDays(-12), ShouldBeReturnedAt = DateTime.Now.AddDays(-9), ReturnedAt = null });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 1, VideoId = 4, RentedAt = DateTime.Now.AddDays(-3), ShouldBeReturnedAt = DateTime.Now, ReturnedAt = null });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 6, RentedAt = DateTime.Now.AddDays(-50), ShouldBeReturnedAt = DateTime.Now.AddDays(-47), ReturnedAt = DateTime.Now.AddDays(-43) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 1, RentedAt = DateTime.Now.AddDays(-36), ShouldBeReturnedAt = DateTime.Now.AddDays(-33), ReturnedAt = DateTime.Now.AddDays(-33) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 7, VideoId = 3, RentedAt = DateTime.Now.AddDays(-29), ShouldBeReturnedAt = DateTime.Now.AddDays(-26), ReturnedAt = null });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 5, VideoId = 6, RentedAt = DateTime.Now.AddDays(-100), ShouldBeReturnedAt = DateTime.Now.AddDays(-97), ReturnedAt = DateTime.Now.AddDays(-96) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 3, VideoId = 10, RentedAt = DateTime.Now.AddDays(-10), ShouldBeReturnedAt = DateTime.Now.AddDays(-7), ReturnedAt = DateTime.Now.AddDays(-7) });
+				_context.Rentals.Add(new Rental { RentedByCustomerId = 3, VideoId = 2, RentedAt = DateTime.Now.AddDays(-2), ShouldBeReturnedAt = DateTime.Now.AddDays(1), ReturnedAt = null });
 			}
 
 			await _context.SaveChangesAsync();

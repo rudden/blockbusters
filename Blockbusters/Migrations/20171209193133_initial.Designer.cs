@@ -11,9 +11,10 @@ using System;
 namespace Blockbusters.Migrations
 {
     [DbContext(typeof(BlockbustersContext))]
-    partial class BlockbustersContextModelSnapshot : ModelSnapshot
+    [Migration("20171209193133_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

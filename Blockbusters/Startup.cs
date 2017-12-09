@@ -1,5 +1,4 @@
 ﻿using Blockbusters.Entities;
-using Blockbusters.Models;
 using Blockbusters.Models.Helpers;
 using Blockbusters.Services;
 using Blockbusters.Services.Contracts;
