@@ -59,10 +59,11 @@ namespace Blockbusters.Controllers
 
 			var customers = Mapper.Map<List<Customer>>(await _customerRepository.GetCustomersAsync());
 
-			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, customers, out var items);
-			if (adjustedHeaders != null)
+			customers.Sort(new SortData { Order = order, Direction = direction, TableHeaders = TableHeaders }, out var items, out var headers);
+
+			if (headers != null)
 			{
-				TableHeaders = adjustedHeaders;
+				TableHeaders = headers.ToList();
 			}
 
 			var data = items.Skip(PageSize * (currentPage - 1)).Take(PageSize);

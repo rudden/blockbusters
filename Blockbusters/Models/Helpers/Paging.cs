@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Blockbusters.Models.Helpers
 {
@@ -40,5 +39,12 @@ namespace Blockbusters.Models.Helpers
 	{
 		Asc,
 		Desc
+	}
+
+	public class SortData
+	{
+		public string Order { get; set; }
+		public string Direction { get; set; }
+		public IEnumerable<TableHeader> TableHeaders { get; set; }
 	}
 }

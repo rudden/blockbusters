@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,10 +69,11 @@ namespace Blockbusters.Controllers
 
 			var rentals = Mapper.Map<List<RentalVideo>>(await _videoRepository.GetRentalsAsync());
 
-			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, rentals, out var items);
-			if (adjustedHeaders != null)
+			rentals.Sort(new SortData { Order =  order, Direction = direction, TableHeaders = TableHeaders }, out var items, out var headers);
+
+			if (headers != null)
 			{
-				TableHeaders = adjustedHeaders;
+				TableHeaders = headers.ToList();
 			}
 
 			var data = items.Skip(PageSize * (currentPage - 1)).Take(PageSize);

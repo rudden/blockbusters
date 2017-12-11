@@ -61,10 +61,11 @@ namespace Blockbusters.Controllers
 
 			var videos = Mapper.Map<List<Video>>(await _repository.GetVideosAsync());
 
-			var adjustedHeaders = Sorter.ApplySorting(id, order, direction, TableHeaders, videos, out var items);
-			if (adjustedHeaders != null)
+			videos.Sort(new SortData { Order = order, Direction = direction, TableHeaders = TableHeaders }, out var items, out var headers);
+
+			if (headers != null)
 			{
-				TableHeaders = adjustedHeaders;
+				TableHeaders = headers.ToList();
 			}
 
 			var data = items.Skip(PageSize * (currentPage - 1)).Take(PageSize);
