@@ -28,7 +28,14 @@
 					if (rental.ShouldBeReturnedAt < DateTime.Now)
 					{
 						var overdueDays = Convert.ToInt32((DateTime.Now - rental.ShouldBeReturnedAt).TotalDays);
-						<span class="tag is-danger">Overdue with @overdueDays days</span>
+						if (overdueDays > 0)
+						{
+							<span class="tag is-danger">Overdue with @overdueDays days</span>
+						}
+						else
+						{
+							<span class="tag is-warning">With customer</span>
+						}
 					}
 					else
 					{

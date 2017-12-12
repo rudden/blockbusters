@@ -8,10 +8,20 @@
 	if (Model.Rental.ShouldBeReturnedAt < DateTime.Now)
 	{
 		var overdueDays = Convert.ToInt32((DateTime.Now - Model.Rental.ShouldBeReturnedAt).TotalDays);
-		<div class="notification is-danger">
-			<p>Overdue with @overdueDays days</p>
-		</div>
-		<a href="/rentals/return/@Model.Rental.Id" class="button is-small is-success">Return Video</a>
+		if (overdueDays > 0)
+		{
+			<div class="notification is-danger">
+				<p>Overdue with @overdueDays days</p>
+			</div>
+			<a href="/rentals/return/@Model.Rental.Id" class="button is-small is-success">Return Video</a>
+		}
+		else
+		{
+			<div class="notification is-info">
+				<p>The video is with the customer.</p>
+			</div>
+			<a href="/rentals/return/@Model.Rental.Id" class="button is-small is-success">Return Video</a>
+		}
 	}
 	else
 	{

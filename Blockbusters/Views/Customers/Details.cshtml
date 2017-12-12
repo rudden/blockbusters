@@ -12,7 +12,6 @@
 			<tr>
 				<th>Video</th>
 				<th>Price</th>
-				<th>Type</th>
 				<th>Rented at</th>
 				<th>Should return at</th>
 				<th>Returned at</th>
@@ -24,7 +23,6 @@
 				<tr onclick="location.href = '@(Url.Action("details", "rentals", new {id = rental.Id}))'">
 					<td>@rental.Video.Title</td>
 					<td>@rental.Video.Price</td>
-					<td>@rental.Video.VideoType</td>
 					<td>@rental.RentedAt.ToString("yyyy-MM-dd")</td>
 					<td>@rental.ShouldBeReturnedAt.ToString("yyyy-MM-dd")</td>
 					<td>
